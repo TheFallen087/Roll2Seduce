@@ -1420,8 +1420,8 @@ const RollToSeduceWebsite = () => {
               <div className="grid md:grid-cols-3 gap-6 mb-8">
                 <div className="text-center">
                   <div className="text-3xl font-light text-[#FF4757] mb-2">2</div>
-                  <p className="text-[#E5E5E7]">Complete Routes</p>
-                  <p className="text-xs text-[#A8A8B3] mt-1">Lilith & Morgana</p>
+                  <p className="text-[#E5E5E7]">2 Routes</p>
+                  <p className="text-xs text-[#A8A8B3] mt-1">Alina & Luciana</p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-light text-[#9B59B6] mb-2">15+</div>
@@ -1442,14 +1442,6 @@ const RollToSeduceWebsite = () => {
                 <li className="flex items-start gap-3">
                   <span className="text-[#2ECC71] mt-0.5">✓</span>
                   <span className="text-[#E5E5E7]">Gallery mode with unlockable CGs and scene replay</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[#2ECC71] mt-0.5">✓</span>
-                  <span className="text-[#E5E5E7]">Multiple endings for each character route</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[#2ECC71] mt-0.5">✓</span>
-                  <span className="text-[#E5E5E7]">Full controller support and customizable settings</span>
                 </li>
               </ul>
             </div>
