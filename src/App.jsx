@@ -15,47 +15,47 @@ const RollToSeduceWebsite = () => {
 
   // Media gallery data
   const mediaGallery = [
-    {
-      id: 1,
-      type: 'image',
-      src: '/public/pic1.png',
-      thumbnail: '/public/pic1.png',
-      category: 'characters',
-      nsfw: true
-    },
-    {
-      id: 2,
-      type: 'gif',
-      src: '/public/gif1.mp4',
-      thumbnail: '/public/gif1.mp4',
-      category: 'animations',
-      nsfw: true
-    },
-    {
-      id: 3,
-      type: 'image',
-      src: '/public/pic2.png',
-      thumbnail: '/public/pic2.png',
-      category: 'characters',
-      nsfw: true
-    },
-    {
-      id: 4,
-      type: 'image',
-      src: '/public/pic3.png',
-      thumbnail: '/public/pic3.pngGrungelda',
-      category: 'characters',
-      nsfw: true
-    },
-    {
-      id: 5,
-      type: 'gif',
-      src: '/public/gif2.mp4',
-      thumbnail: '/public/gif2.mp4',
-      category: 'animations',
-      nsfw: true
-    },  
-  ];
+   {
+    id: 1,
+    type: 'image',
+    src: '/pic1.png',  // Remove 'public' from path
+    thumbnail: '/pic1.png',
+    category: 'characters',
+    nsfw: true
+  },
+  {
+    id: 2,
+    type: 'gif',
+    src: '/gif1.mp4',  // Videos work the same way
+    thumbnail: '/gif1.mp4',
+    category: 'animations',
+    nsfw: true
+  },
+  {
+    id: 3,
+    type: 'image',
+    src: '/pic2.png',
+    thumbnail: '/pic2.png',
+    category: 'characters',
+    nsfw: true
+  },
+  {
+    id: 4,
+    type: 'image',
+    src: '/pic3.png',
+    thumbnail: '/pic3.png',  // Fixed the corrupted path
+    category: 'characters',
+    nsfw: true
+  },
+  {
+    id: 5,
+    type: 'gif',
+    src: '/gif2.mp4',
+    thumbnail: '/gif2.mp4',
+    category: 'animations',
+    nsfw: true
+  },  
+];
 
   // Filter categories
   const filterCategories = [
@@ -1429,8 +1429,8 @@ const RollToSeduceWebsite = () => {
                   <p className="text-xs text-[#A8A8B3] mt-1">Fully unlockable</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-light text-[#FF6B9D] mb-2">3+</div>
-                  <p className="text-[#E5E5E7]">Hours Gameplay</p>
+                  <div className="text-3xl font-light text-[#FF6B9D] mb-2">1</div>
+                  <p className="text-[#E5E5E7]">Hour of Gameplay</p>
                   <p className="text-xs text-[#A8A8B3] mt-1">Per route</p>
                 </div>
               </div>
