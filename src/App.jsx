@@ -800,10 +800,6 @@ const RollToSeduceWebsite = () => {
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-[#FF4757] mt-1 text-lg">▸</span>
-                  <div>
-                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Cross-Platform Play</h4>
-                    <p className="text-sm text-[#E5E5E7] mt-1">Seamless experience across PC, Mac, and Linux</p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -1430,7 +1426,7 @@ const RollToSeduceWebsite = () => {
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-light text-[#FF6B9D] mb-2">1</div>
-                  <p className="text-[#E5E5E7]">Hour of Gameplay</p>
+                  <p className="text-[#E5E5E7]">Hour Of Gameplay</p>
                   <p className="text-xs text-[#A8A8B3] mt-1">Per route</p>
                 </div>
               </div>
