@@ -794,12 +794,9 @@ const RollToSeduceWebsite = () => {
                 <div className="flex items-start gap-3">
                   <span className="text-[#FF4757] mt-1 text-lg">▸</span>
                   <div>
-                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Gallery & Achievements</h4>
-                    <p className="text-sm text-[#E5E5E7] mt-1">Unlock system with Steam achievement integration</p>
+                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Gallery</h4>
+                    <p className="text-sm text-[#E5E5E7] mt-1">Unlockable CG Gallery</p>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-[#FF4757] mt-1 text-lg">▸</span>
                 </div>
               </div>
             </div>
