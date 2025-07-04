@@ -9,50 +9,96 @@ const RollToSeduceWebsite = () => {
     windows: 'idle',
     android: 'idle'
   });
+  const [selectedMedia, setSelectedMedia] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('all');
   const canvasRef = useRef(null);
+
+  // Media gallery data
+  const mediaGallery = [
+    {
+      id: 1,
+      type: 'image',
+      src: '/public/pic1.png',
+      thumbnail: '/public/pic1.png',
+      category: 'characters',
+      nsfw: true
+    },
+    {
+      id: 2,
+      type: 'gif',
+      src: '/public/gif1.mp4',
+      thumbnail: '/public/gif1.mp4',
+      category: 'animations',
+      nsfw: true
+    },
+    {
+      id: 3,
+      type: 'image',
+      src: '/public/pic2.png',
+      thumbnail: '/public/pic2.png',
+      category: 'characters',
+      nsfw: true
+    },
+    {
+      id: 4,
+      type: 'image',
+      src: '/public/pic3.png',
+      thumbnail: '/public/pic3.pngGrungelda',
+      category: 'characters',
+      nsfw: true
+    },
+    {
+      id: 5,
+      type: 'gif',
+      src: '/public/gif2.mp4',
+      thumbnail: '/public/gif2.mp4',
+      category: 'animations',
+      nsfw: true
+    },  
+  ];
+
+  // Filter categories
+  const filterCategories = [
+    { id: 'all', label: 'All Media', icon: '🎮' },
+    { id: 'characters', label: 'Characters', icon: '👹' },
+    { id: 'cg', label: 'CG Scenes', icon: '🎨' },
+    { id: 'animations', label: 'Animations', icon: '✨' },
+    { id: 'environments', label: 'Environments', icon: '🏰' },
+    { id: 'gameplay', label: 'Gameplay', icon: '⚔️' },
+    { id: 'interface', label: 'Interface', icon: '🎛️' }
+  ];
+
+  // Filter media based on category
+  const filteredMedia = activeFilter === 'all' 
+    ? mediaGallery 
+    : mediaGallery.filter(item => item.category === activeFilter);
 
   // Character data matching the dark fantasy theme
   const characters = [
     {
-      id: 'lilith',
-      name: 'Lilith',
+      id: 'alina',
+      name: 'Alina',
       title: 'Succubus Queen',
-      description: 'Ancient temptress who feeds on desire itself. Her wings cast shadows that whisper promises of eternal pleasure.',
-      power: 'Desire Manipulation',
-      route: 'Path of Crimson Temptation',
-      quote: 'Your soul tastes sweeter when you offer it willingly...',
+      description: 'Placeholder text',
+      quote: 'Placeholder text',
       colors: ['#FF4757', '#C44569']
     },
     {
-      id: 'morgana',
-      name: 'Morgana',
-      title: 'Fallen Angel',
-      description: 'Cast from heaven for loving too deeply, her corrupted wings now serve darker purposes.',
-      power: 'Divine Corruption',
-      route: 'Path of Forbidden Grace',
-      quote: 'Heaven\'s loss is your exquisite gain...',
+      id: 'grungelda',
+      name: 'Grungelda',
+      title: 'Troll',
+      description: 'Placeholder text',
+      quote: 'Placeholder text',
       colors: ['#9B59B6', '#8E44AD']
     },
     {
-      id: 'nyx',
-      name: 'Nyx',
-      title: 'Shadow Mistress',
-      description: 'Born from nightmares and desires, she exists in the space between dream and reality.',
-      power: 'Dream Weaving',
-      route: 'Path of Midnight Whispers',
-      quote: 'In dreams, all your darkest wishes come true...',
+      id: 'luciana',
+      name: 'Luciana',
+      title: 'Human',
+      description: 'Placeholder text',
+      quote: 'Placeholder text',
       colors: ['#5F27CD', '#341F97']
     },
-    {
-      id: 'scarlett',
-      name: 'Scarlett',
-      title: 'Vampire Duchess',
-      description: 'Centuries of seduction have perfected her art. Every kiss is both ecstasy and damnation.',
-      power: 'Blood Magic',
-      route: 'Path of Eternal Thirst',
-      quote: 'One taste, and you\'ll beg for eternity...',
-      colors: ['#FF6B9D', '#C44569']
-    }
   ];
 
   // Download configurations
@@ -375,11 +421,11 @@ const RollToSeduceWebsite = () => {
               <div className="flex items-center gap-6 text-sm text-[#A8A8B3]">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#FF4757] rounded-full"></div>
-                  <span>4 Unique Routes</span>
+                  <span>4+ Unique Routes</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#9B59B6] rounded-full"></div>
-                  <span>20+ Endings</span>
+                  <span>1+ Endings</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[#FF6B9D] rounded-full"></div>
@@ -456,6 +502,215 @@ const RollToSeduceWebsite = () => {
           </div>
         </div>
       </section>
+
+      {/* Screenshot Gallery Section */}
+      <section className="py-24 px-8 bg-gradient-to-b from-transparent via-[#1A1A1F]/30 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-serif font-light mb-6">
+              Visual <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Showcase</span>
+            </h2>
+            <p className="text-xl text-[#E5E5E7] max-w-3xl mx-auto">
+              Explore stunning artwork, dynamic animations, and atmospheric environments from the world of Roll to Seduce
+            </p>
+          </div>
+
+          {/* Filter buttons */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {filterCategories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveFilter(category.id)}
+                className={`px-6 py-3 rounded-full border transition-all duration-300 flex items-center gap-2
+                  ${activeFilter === category.id 
+                    ? 'bg-gradient-to-r from-[#FF4757] to-[#9B59B6] border-transparent text-white' 
+                    : 'bg-[#1A1A1F] border-[#2D2D33] hover:border-[#FF4757]/50 text-[#E5E5E7]'
+                  }`}
+              >
+                <span className="text-lg">{category.icon}</span>
+                <span className="text-sm font-medium tracking-wide">{category.label}</span>
+                {category.id !== 'all' && (
+                  <span className="text-xs opacity-60">
+                    ({mediaGallery.filter(item => item.category === category.id).length})
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Media grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredMedia.map((media, index) => (
+              <div
+                key={media.id}
+                className="group relative bg-[#1A1A1F] border border-[#2D2D33] rounded-lg overflow-hidden hover:border-[#FF4757]/50 transition-all duration-300 cursor-pointer"
+                onClick={() => setSelectedMedia(media)}
+                style={{
+                  animationDelay: `${index * 50}ms`,
+                  animation: 'fadeInUp 0.6s ease-out forwards',
+                  opacity: 0
+                }}
+              >
+                {/* NSFW blur overlay */}
+                {media.nsfw && (
+                  <div className="absolute inset-0 z-20 bg-[#0F0F12]/80 backdrop-blur-md flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300">
+                    <div className="text-center">
+                      <span className="text-2xl mb-2">🔞</span>
+                      <p className="text-xs text-[#FF4757]">NSFW Content</p>
+                      <p className="text-xs text-[#A8A8B3]">Hover to reveal</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Media type indicator */}
+                {media.type === 'gif' && (
+                  <div className="absolute top-3 right-3 z-30 px-2 py-1 bg-[#9B59B6]/80 backdrop-blur-sm rounded-full">
+                    <span className="text-xs font-medium text-white">GIF</span>
+                  </div>
+                )}
+
+                {/* Thumbnail */}
+                <div className="aspect-video bg-[#252529] relative overflow-hidden">
+                  <img 
+                    src={media.thumbnail} 
+                    alt={media.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F12] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <div className="text-white">
+                      <h4 className="text-lg font-medium mb-1">{media.title}</h4>
+                      <p className="text-sm text-gray-300">{media.description}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Character indicator */}
+                {media.character && (
+                  <div className="absolute top-3 left-3 z-30">
+                    <div 
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                      style={{
+                        background: `linear-gradient(135deg, ${characters.find(c => c.id === media.character)?.colors[0]} 0%, ${characters.find(c => c.id === media.character)?.colors[1]} 100%)`
+                      }}
+                    >
+                      {media.character.charAt(0).toUpperCase()}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* View more button */}
+          <div className="text-center mt-12">
+            <button className="px-8 py-3 border border-[#2D2D33] hover:border-[#FF4757]/50 bg-[#1A1A1F] hover:bg-[#252529] text-[#E5E5E7] hover:text-[#FF4757] transition-all tracking-wider">
+              LOAD MORE MEDIA
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Media Lightbox Modal */}
+      {selectedMedia && (
+        <div 
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-[#0F0F12]/95 backdrop-blur-md"
+          onClick={() => setSelectedMedia(null)}
+        >
+          <div 
+            className="relative max-w-6xl w-full bg-[#1A1A1F] border border-[#2D2D33] rounded-lg overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setSelectedMedia(null)}
+              className="absolute top-4 right-4 z-10 text-[#A8A8B3] hover:text-[#FAFAFA] transition-colors bg-[#0F0F12]/80 backdrop-blur-sm rounded-full p-2"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Media display */}
+            <div className="relative bg-[#0F0F12]">
+              {selectedMedia.type === 'image' ? (
+                <img 
+                  src={selectedMedia.src} 
+                  alt={selectedMedia.title}
+                  className="w-full h-auto max-h-[80vh] object-contain"
+                />
+              ) : (
+                <img 
+                  src={selectedMedia.src} 
+                  alt={selectedMedia.title}
+                  className="w-full h-auto max-h-[80vh] object-contain"
+                />
+              )}
+            </div>
+
+            {/* Media info */}
+            <div className="p-6 bg-gradient-to-t from-[#1A1A1F] to-[#252529]">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-2xl font-light text-[#FAFAFA] mb-2">{selectedMedia.title}</h3>
+                  <p className="text-[#E5E5E7] mb-4">{selectedMedia.description}</p>
+                  <div className="flex items-center gap-4 text-sm">
+                    <span className="px-3 py-1 bg-[#252529] rounded-full text-[#A8A8B3] capitalize">
+                      {selectedMedia.category}
+                    </span>
+                    {selectedMedia.character && (
+                      <span 
+                        className="px-3 py-1 rounded-full text-white capitalize"
+                        style={{
+                          background: `linear-gradient(90deg, ${characters.find(c => c.id === selectedMedia.character)?.colors[0]} 0%, ${characters.find(c => c.id === selectedMedia.character)?.colors[1]} 100%)`
+                        }}
+                      >
+                        {selectedMedia.character}
+                      </span>
+                    )}
+                    {selectedMedia.nsfw && (
+                      <span className="px-3 py-1 bg-[#FF4757]/20 text-[#FF4757] rounded-full">
+                        NSFW
+                      </span>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Navigation arrows */}
+                <div className="flex gap-2">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const currentIndex = filteredMedia.findIndex(m => m.id === selectedMedia.id);
+                      const prevIndex = currentIndex === 0 ? filteredMedia.length - 1 : currentIndex - 1;
+                      setSelectedMedia(filteredMedia[prevIndex]);
+                    }}
+                    className="p-2 bg-[#252529] hover:bg-[#2D2D33] rounded-full transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const currentIndex = filteredMedia.findIndex(m => m.id === selectedMedia.id);
+                      const nextIndex = currentIndex === filteredMedia.length - 1 ? 0 : currentIndex + 1;
+                      setSelectedMedia(filteredMedia[nextIndex]);
+                    }}
+                    className="p-2 bg-[#252529] hover:bg-[#2D2D33] rounded-full transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Features section */}
       <section className="py-24 px-8 relative">
@@ -564,7 +819,7 @@ const RollToSeduceWebsite = () => {
               Development <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Roadmap</span>
             </h2>
             <p className="text-xl text-[#E5E5E7]">
-              Join us on the journey to v1.0 and beyond
+              Join us on the journey to v2.0 and beyond
             </p>
           </div>
 
@@ -582,7 +837,7 @@ const RollToSeduceWebsite = () => {
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#FF4757] rounded-full ring-4 ring-[#FF4757]/20 animate-pulse"></div>
                 <div className="flex-1 pl-8">
                   <ul className="text-sm text-[#E5E5E7] space-y-1">
-                    <li>• 2 Complete character routes</li>
+                    <li>• 2 character routes</li>
                     <li>• 15+ CG scenes</li>
                     <li>• Basic save system</li>
                   </ul>
@@ -592,15 +847,14 @@ const RollToSeduceWebsite = () => {
               {/* Upcoming */}
               <div className="relative flex items-center opacity-75">
                 <div className="flex-1 text-right pr-8">
-                  <h3 className="text-2xl font-light text-[#9B59B6]">Version 2.5</h3>
-                  <p className="text-[#A8A8B3] mt-1">Q2 2025</p>
+                  <h3 className="text-2xl font-light text-[#9B59B6]">Version 3.0</h3>
+                  <p className="text-[#A8A8B3] mt-1">July 20th 2025</p>
                 </div>
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#2D2D33] rounded-full"></div>
                 <div className="flex-1 pl-8">
                   <ul className="text-sm text-[#A8A8B3] space-y-1">
-                    <li>• Morgana route completion</li>
-                    <li>• Voice acting integration</li>
-                    <li>• Gallery mode</li>
+                    <li>• Coming Soon</li>
+                    <li>• Coming Soon</li>
                   </ul>
                 </div>
               </div>
@@ -608,15 +862,15 @@ const RollToSeduceWebsite = () => {
               {/* Future */}
               <div className="relative flex items-center opacity-50">
                 <div className="flex-1 text-right pr-8">
-                  <h3 className="text-2xl font-light text-[#FF6B9D]">Version 3.0</h3>
-                  <p className="text-[#A8A8B3] mt-1">Q3 2025</p>
+                  <h3 className="text-2xl font-light text-[#FF6B9D]">Version 4.0</h3>
+                  <p className="text-[#A8A8B3] mt-1">Q2 2025</p>
                 </div>
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#2D2D33] rounded-full"></div>
                 <div className="flex-1 pl-8">
                   <ul className="text-sm text-[#A8A8B3] space-y-1">
-                    <li>• Final character route</li>
-                    <li>• Multiple endings system</li>
-                    <li>• Steam achievements</li>
+                    <li>• Coming Soon</li>
+                    <li>• Coming Soon</li>
+                    <li>• Coming Soon</li>
                   </ul>
                 </div>
               </div>
@@ -644,10 +898,24 @@ const RollToSeduceWebsite = () => {
                 <span className="text-xs text-[#A8A8B3]">2 days ago</span>
               </div>
               <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Version 2.0 Released!</h3>
-              <p className="text-[#E5E5E7] mb-4">
-                Major update bringing Lilith's complete route with 7 new CG scenes, 
-                improved dialogue system, and bug fixes based on community feedback.
-              </p>
+                  <ul className="text-[#E5E5E7] mb-4 space-y-2">
+                   <li className="flex items-start gap-2">
+                 <span className="text-[#FF4757] mt-0.5">•</span>
+               <span>Meet the new characters: the magnificent Luciana and the cheeky Grungelda</span>
+                    </li>
+                        <li className="flex items-start gap-2">
+                     <span className="text-[#FF4757] mt-0.5">•</span>
+                 <span>New NSFW animation plus extra spicy artwork</span>
+                  </li>
+                        <li className="flex items-start gap-2">
+                 <span className="text-[#FF4757] mt-0.5">•</span>
+                      <span>Hidden Object minigame</span>
+                      </li>
+                       <li className="flex items-start gap-2">
+                            <span className="text-[#FF4757] mt-0.5">•</span>
+                          <span>A huge lore drop</span>
+                          </li>
+                        </ul>
               <button className="text-sm text-[#FF4757] hover:text-[#FF6B9D] transition-colors">
                 Read full notes →
               </button>
@@ -658,10 +926,9 @@ const RollToSeduceWebsite = () => {
                 <span className="px-3 py-1 bg-[#9B59B6]/20 text-[#9B59B6] text-xs tracking-wider">DEV BLOG</span>
                 <span className="text-xs text-[#A8A8B3]">1 week ago</span>
               </div>
-              <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Behind the Scenes: Morgana</h3>
+              <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Behind the Scenes: Alina</h3>
               <p className="text-[#E5E5E7] mb-4">
-                Dive into the creative process behind our fallen angel. See concept art, 
-                story drafts, and learn how community feedback shaped her character.
+                Coming soon.
               </p>
               <button className="text-sm text-[#9B59B6] hover:text-[#FF6B9D] transition-colors">
                 Continue reading →
@@ -693,7 +960,7 @@ const RollToSeduceWebsite = () => {
             <div className="text-center p-8 bg-[#1A1A1F] border border-[#2D2D33]">
               <div className="text-4xl mb-4">💬</div>
               <h3 className="text-2xl font-light mb-2 text-[#FAFAFA]">Discord Community</h3>
-              <p className="text-[#E5E5E7] mb-4">2,500+ active members</p>
+              <p className="text-[#E5E5E7] mb-4">100+ active members</p>
               <p className="text-sm text-[#A8A8B3]">
                 Daily discussions, exclusive previews, and direct dev interaction
               </p>
@@ -702,7 +969,7 @@ const RollToSeduceWebsite = () => {
             <div className="text-center p-8 bg-[#1A1A1F] border border-[#2D2D33]">
               <div className="text-4xl mb-4">🎨</div>
               <h3 className="text-2xl font-light mb-2 text-[#FAFAFA]">Fan Creations</h3>
-              <p className="text-[#E5E5E7] mb-4">500+ artworks</p>
+              <p className="text-[#E5E5E7] mb-4">10+ artworks</p>
               <p className="text-sm text-[#A8A8B3]">
                 Community showcase featuring incredible fan art and stories
               </p>
@@ -1458,6 +1725,17 @@ const RollToSeduceWebsite = () => {
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         .animate-spin {
