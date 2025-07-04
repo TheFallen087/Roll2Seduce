@@ -457,6 +457,564 @@ const RollToSeduceWebsite = () => {
         </div>
       </section>
 
+      {/* Features section */}
+      <section className="py-24 px-8 relative">
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-serif font-light mb-6">
+              Unity <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Excellence</span>
+            </h2>
+            <p className="text-xl text-[#E5E5E7]">
+              Premium visual novel features powered by cutting-edge technology
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="group text-center p-8 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#FF4757]/50 transition-all duration-300">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF4757] to-[#9B59B6] rounded-full flex items-center justify-center">
+                <span className="text-2xl">🔥</span>
+              </div>
+              <h3 className="text-xl mb-3 font-medium text-[#FAFAFA]">Stunning Artwork</h3>
+              <p className="text-[#E5E5E7] text-sm">
+                Hand-drawn CGs with multiple variations and dynamic expressions
+              </p>
+            </div>
+            <div className="group text-center p-8 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#9B59B6]/50 transition-all duration-300">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#9B59B6] to-[#FF6B9D] rounded-full flex items-center justify-center">
+                <span className="text-2xl">💋</span>
+              </div>
+              <h3 className="text-xl mb-3 font-medium text-[#FAFAFA]">Interactive Seduction</h3>
+              <p className="text-[#E5E5E7] text-sm">
+                Your choices shape how each temptress pursues you
+              </p>
+            </div>
+            <div className="group text-center p-8 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#FF6B9D]/50 transition-all duration-300">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B9D] to-[#FF4757] rounded-full flex items-center justify-center">
+                <span className="text-2xl">🌙</span>
+              </div>
+              <h3 className="text-xl mb-3 font-medium text-[#FAFAFA]">Dark Romance</h3>
+              <p className="text-[#E5E5E7] text-sm">
+                Where love and damnation intertwine beautifully
+              </p>
+            </div>
+          </div>
+
+          {/* Unity specific features */}
+          <div className="bg-[#1A1A1F] border border-[#2D2D33] p-8">
+            <h3 className="text-2xl font-medium mb-8 text-center text-[#FAFAFA]">
+              Advanced Game Features
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div className="flex items-start gap-3">
+                  <span className="text-[#9B59B6] mt-1 text-lg">▸</span>
+                  <div>
+                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Enhanced Graphics</h4>
+                    <p className="text-sm text-[#E5E5E7] mt-1">Unity's powerful rendering for stunning visual effects</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-[#9B59B6] mt-1 text-lg">▸</span>
+                  <div>
+                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Smooth Animations</h4>
+                    <p className="text-sm text-[#E5E5E7] mt-1">60 FPS character animations and transitions</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-[#9B59B6] mt-1 text-lg">▸</span>
+                  <div>
+                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Dynamic Audio</h4>
+                    <p className="text-sm text-[#E5E5E7] mt-1">3D positional audio and atmospheric soundscapes</p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <div className="flex items-start gap-3">
+                  <span className="text-[#FF4757] mt-1 text-lg">▸</span>
+                  <div>
+                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Advanced Save System</h4>
+                    <p className="text-sm text-[#E5E5E7] mt-1">Cloud saves with unlimited slots and thumbnails</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-[#FF4757] mt-1 text-lg">▸</span>
+                  <div>
+                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Gallery & Achievements</h4>
+                    <p className="text-sm text-[#E5E5E7] mt-1">Unlock system with Steam achievement integration</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-[#FF4757] mt-1 text-lg">▸</span>
+                  <div>
+                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Cross-Platform Play</h4>
+                    <p className="text-sm text-[#E5E5E7] mt-1">Seamless experience across PC, Mac, and Linux</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Development Roadmap */}
+      <section className="py-24 px-8 bg-gradient-to-b from-transparent via-[#1A1A1F]/20 to-transparent">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-serif font-light mb-6">
+              Development <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Roadmap</span>
+            </h2>
+            <p className="text-xl text-[#E5E5E7]">
+              Join us on the journey to v1.0 and beyond
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-[#FF4757]/50 via-[#9B59B6]/50 to-[#FF6B9D]/50"></div>
+            
+            <div className="space-y-12">
+              {/* Current version */}
+              <div className="relative flex items-center">
+                <div className="flex-1 text-right pr-8">
+                  <h3 className="text-2xl font-light text-[#FF4757]">Version 2.0</h3>
+                  <p className="text-[#A8A8B3] mt-1">Current Build</p>
+                </div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#FF4757] rounded-full ring-4 ring-[#FF4757]/20 animate-pulse"></div>
+                <div className="flex-1 pl-8">
+                  <ul className="text-sm text-[#E5E5E7] space-y-1">
+                    <li>• 2 Complete character routes</li>
+                    <li>• 15+ CG scenes</li>
+                    <li>• Basic save system</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Upcoming */}
+              <div className="relative flex items-center opacity-75">
+                <div className="flex-1 text-right pr-8">
+                  <h3 className="text-2xl font-light text-[#9B59B6]">Version 2.5</h3>
+                  <p className="text-[#A8A8B3] mt-1">Q2 2025</p>
+                </div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#2D2D33] rounded-full"></div>
+                <div className="flex-1 pl-8">
+                  <ul className="text-sm text-[#A8A8B3] space-y-1">
+                    <li>• Morgana route completion</li>
+                    <li>• Voice acting integration</li>
+                    <li>• Gallery mode</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Future */}
+              <div className="relative flex items-center opacity-50">
+                <div className="flex-1 text-right pr-8">
+                  <h3 className="text-2xl font-light text-[#FF6B9D]">Version 3.0</h3>
+                  <p className="text-[#A8A8B3] mt-1">Q3 2025</p>
+                </div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#2D2D33] rounded-full"></div>
+                <div className="flex-1 pl-8">
+                  <ul className="text-sm text-[#A8A8B3] space-y-1">
+                    <li>• Final character route</li>
+                    <li>• Multiple endings system</li>
+                    <li>• Steam achievements</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Updates */}
+      <section className="py-24 px-8 bg-gradient-to-t from-[#1A1A1F]/20 to-transparent">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-serif font-light mb-6">
+              Latest <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Updates</span>
+            </h2>
+            <p className="text-xl text-[#E5E5E7]">
+              Fresh from the development hell
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-[#1A1A1F] border border-[#2D2D33] p-8 hover:border-[#FF4757]/50 transition-all">
+              <div className="flex items-start justify-between mb-4">
+                <span className="px-3 py-1 bg-[#FF4757]/20 text-[#FF4757] text-xs tracking-wider">PATCH NOTES</span>
+                <span className="text-xs text-[#A8A8B3]">2 days ago</span>
+              </div>
+              <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Version 2.0 Released!</h3>
+              <p className="text-[#E5E5E7] mb-4">
+                Major update bringing Lilith's complete route with 7 new CG scenes, 
+                improved dialogue system, and bug fixes based on community feedback.
+              </p>
+              <button className="text-sm text-[#FF4757] hover:text-[#FF6B9D] transition-colors">
+                Read full notes →
+              </button>
+            </div>
+
+            <div className="bg-[#1A1A1F] border border-[#2D2D33] p-8 hover:border-[#9B59B6]/50 transition-all">
+              <div className="flex items-start justify-between mb-4">
+                <span className="px-3 py-1 bg-[#9B59B6]/20 text-[#9B59B6] text-xs tracking-wider">DEV BLOG</span>
+                <span className="text-xs text-[#A8A8B3]">1 week ago</span>
+              </div>
+              <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Behind the Scenes: Morgana</h3>
+              <p className="text-[#E5E5E7] mb-4">
+                Dive into the creative process behind our fallen angel. See concept art, 
+                story drafts, and learn how community feedback shaped her character.
+              </p>
+              <button className="text-sm text-[#9B59B6] hover:text-[#FF6B9D] transition-colors">
+                Continue reading →
+              </button>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <button className="px-8 py-3 border border-[#2D2D33] hover:border-[#FF4757]/50 bg-[#1A1A1F] hover:bg-[#252529] text-[#E5E5E7] hover:text-[#FF4757] transition-all tracking-wider">
+              VIEW ALL UPDATES
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Community section */}
+      <section className="py-24 px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-serif font-light mb-6">
+              Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Cult</span>
+            </h2>
+            <p className="text-xl text-[#E5E5E7]">
+              A thriving community of sinners shaping the game together
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="text-center p-8 bg-[#1A1A1F] border border-[#2D2D33]">
+              <div className="text-4xl mb-4">💬</div>
+              <h3 className="text-2xl font-light mb-2 text-[#FAFAFA]">Discord Community</h3>
+              <p className="text-[#E5E5E7] mb-4">2,500+ active members</p>
+              <p className="text-sm text-[#A8A8B3]">
+                Daily discussions, exclusive previews, and direct dev interaction
+              </p>
+            </div>
+            
+            <div className="text-center p-8 bg-[#1A1A1F] border border-[#2D2D33]">
+              <div className="text-4xl mb-4">🎨</div>
+              <h3 className="text-2xl font-light mb-2 text-[#FAFAFA]">Fan Creations</h3>
+              <p className="text-[#E5E5E7] mb-4">500+ artworks</p>
+              <p className="text-sm text-[#A8A8B3]">
+                Community showcase featuring incredible fan art and stories
+              </p>
+            </div>
+            
+            <div className="text-center p-8 bg-[#1A1A1F] border border-[#2D2D33]">
+              <div className="text-4xl mb-4">🗳️</div>
+              <h3 className="text-2xl font-light mb-2 text-[#FAFAFA]">Shape Development</h3>
+              <p className="text-[#E5E5E7] mb-4">Weekly polls</p>
+              <p className="text-sm text-[#A8A8B3]">
+                Vote on features, characters, and story directions
+              </p>
+            </div>
+          </div>
+
+          {/* Newsletter signup */}
+          <div className="max-w-2xl mx-auto text-center p-8 bg-gradient-to-r from-[#FF4757]/10 to-[#9B59B6]/10 border border-[#FF4757]/30">
+            <h3 className="text-2xl font-light mb-4 text-[#FAFAFA]">Stay Corrupted</h3>
+            <p className="text-[#E5E5E7] mb-6">
+              Monthly dev updates, exclusive art, and early access announcements
+            </p>
+            <div className="flex gap-4 max-w-md mx-auto">
+              <input 
+                type="email" 
+                placeholder="your.soul@email.com" 
+                className="flex-1 px-4 py-3 bg-[#1A1A1F] border border-[#2D2D33] focus:border-[#FF4757] outline-none transition-colors text-[#FAFAFA] placeholder-[#A8A8B3]"
+              />
+              <button className="px-6 py-3 bg-gradient-to-r from-[#FF4757] to-[#9B59B6] hover:from-[#E53E3E] hover:to-[#8E44AD] transition-all text-white font-medium">
+                SUBMIT
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Patreon Integration Section */}
+      <section className="py-24 px-8 relative overflow-hidden">
+        {/* Animated background gradient */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#9B59B6] rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF6B9D] rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Header with Patreon branding */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#F96854] to-[#FF424D] rounded-full flex items-center justify-center">
+                <span className="text-white text-xl font-bold">P</span>
+              </div>
+              <span className="text-sm text-[#A8A8B3] tracking-wider">OFFICIAL PATREON</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-serif font-light mb-6">
+              Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] via-[#9B59B6] to-[#FF6B9D]">Inner Circle</span>
+            </h2>
+            <p className="text-xl text-[#E5E5E7] max-w-3xl mx-auto leading-relaxed">
+              Unlock exclusive content, influence development, and become part of an intimate community 
+              shaping the most seductive visual novel experience ever created
+            </p>
+          </div>
+
+          {/* Patron count and goals */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <div className="bg-gradient-to-r from-[#1A1A1F]/90 to-[#252529]/90 backdrop-blur-sm border border-[#9B59B6]/30 rounded-lg p-8">
+              <div className="grid md:grid-cols-3 gap-8 text-center">
+                <div>
+                  <div className="text-4xl font-light text-[#9B59B6] mb-2">127</div>
+                  <p className="text-sm text-[#A8A8B3] tracking-wider">ACTIVE PATRONS</p>
+                </div>
+                <div>
+                  <div className="text-4xl font-light text-[#FF6B9D] mb-2">$1,847</div>
+                  <p className="text-sm text-[#A8A8B3] tracking-wider">MONTHLY SUPPORT</p>
+                </div>
+                <div>
+                  <div className="text-4xl font-light text-[#FF4757] mb-2">89%</div>
+                  <p className="text-sm text-[#A8A8B3] tracking-wider">TO NEXT GOAL</p>
+                </div>
+              </div>
+              
+              {/* Progress bar */}
+              <div className="mt-8">
+                <div className="flex justify-between text-xs text-[#A8A8B3] mb-2">
+                  <span>Voice Acting Implementation</span>
+                  <span>$2,000/month</span>
+                </div>
+                <div className="h-2 bg-[#1A1A1F] rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-[#9B59B6] to-[#FF6B9D] rounded-full transition-all duration-1000" style={{ width: '89%' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced tier design */}
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            {/* Tier 1 */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-[#FF4757]/20 to-transparent rounded-lg transform rotate-3 group-hover:rotate-1 transition-transform"></div>
+              <div className="relative bg-[#1A1A1F] border border-[#2D2D33] rounded-lg p-8 hover:border-[#FF4757]/50 transition-all">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-light text-[#FAFAFA]">Tempted Soul</h3>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FF4757] to-[#C44569] flex items-center justify-center">
+                    <span className="text-lg">🔥</span>
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <span className="text-4xl font-light text-[#FF4757]">$5</span>
+                  <span className="text-[#A8A8B3]">/month</span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF4757] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Early access to all game updates</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF4757] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Exclusive Discord role & channels</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF4757] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Your name in game credits</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF4757] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Patron-only news & updates</span>
+                  </li>
+                </ul>
+
+                <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer">
+                  <button className="w-full py-3 border border-[#2D2D33] hover:border-[#FF4757] bg-[#252529] hover:bg-[#FF4757]/10 transition-all text-[#FAFAFA] font-medium tracking-wider">
+                    BECOME A PATRON
+                  </button>
+                </a>
+              </div>
+            </div>
+
+            {/* Tier 2 - Featured */}
+            <div className="group relative transform lg:scale-110 z-10">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-[#9B59B6] to-[#FF6B9D] rounded-full">
+                <span className="text-xs font-medium tracking-wider">MOST POPULAR</span>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-b from-[#9B59B6]/30 to-[#FF6B9D]/30 rounded-lg blur-xl"></div>
+              <div className="relative bg-[#1A1A1F] border-2 border-[#9B59B6]/50 rounded-lg p-8 hover:border-[#9B59B6] transition-all shadow-2xl">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-light text-[#FAFAFA]">Corrupted Heart</h3>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#9B59B6] to-[#FF6B9D] flex items-center justify-center">
+                    <span className="text-lg">💜</span>
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <span className="text-4xl font-light text-[#9B59B6]">$15</span>
+                  <span className="text-[#A8A8B3]">/month</span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#9B59B6] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#FAFAFA] text-sm font-medium">Everything from Tempted Soul</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#9B59B6] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#FAFAFA] text-sm">Vote on story directions & features</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#9B59B6] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#FAFAFA] text-sm">Exclusive NSFW art & scenes</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#9B59B6] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#FAFAFA] text-sm">HD wallpapers & concept art</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#9B59B6] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#FAFAFA] text-sm">Behind-the-scenes content</span>
+                  </li>
+                </ul>
+
+                <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer">
+                  <button className="w-full py-3 bg-gradient-to-r from-[#9B59B6] to-[#FF6B9D] hover:from-[#8E44AD] hover:to-[#EC4899] transition-all text-white font-medium tracking-wider shadow-lg">
+                    BECOME A PATRON
+                  </button>
+                </a>
+              </div>
+            </div>
+
+            {/* Tier 3 */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-[#FF6B9D]/20 to-transparent rounded-lg transform -rotate-3 group-hover:-rotate-1 transition-transform"></div>
+              <div className="relative bg-[#1A1A1F] border border-[#2D2D33] rounded-lg p-8 hover:border-[#FF6B9D]/50 transition-all">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-light text-[#FAFAFA]">Damned Devotee</h3>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FF6B9D] to-[#FF4757] flex items-center justify-center">
+                    <span className="text-lg">👹</span>
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <span className="text-4xl font-light text-[#FF6B9D]">$30</span>
+                  <span className="text-[#A8A8B3]">/month</span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF6B9D] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Everything from lower tiers</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF6B9D] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Design a background character</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF6B9D] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Monthly video call with developer</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF6B9D] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Physical merchandise package</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF6B9D] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
+                    </svg>
+                    <span className="text-[#E5E5E7] text-sm">Alpha/Beta access to new projects</span>
+                  </li>
+                </ul>
+
+                <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer">
+                  <button className="w-full py-3 border border-[#2D2D33] hover:border-[#FF6B9D] bg-[#252529] hover:bg-[#FF6B9D]/10 transition-all text-[#FAFAFA] font-medium tracking-wider">
+                    BECOME A PATRON
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Benefits showcase */}
+          <div className="max-w-5xl mx-auto">
+            <h3 className="text-3xl font-light text-center mb-12">
+              Exclusive <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9B59B6] to-[#FF6B9D]">Patron Benefits</span>
+            </h3>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-gradient-to-br from-[#1A1A1F] to-[#252529] border border-[#2D2D33] rounded-lg p-6 text-center hover:border-[#FF4757]/50 transition-all">
+                <div className="text-3xl mb-3">🎨</div>
+                <h4 className="text-lg font-medium text-[#FAFAFA] mb-2">Exclusive Art</h4>
+                <p className="text-sm text-[#A8A8B3]">Access to 50+ patron-only CGs and sketches</p>
+              </div>
+              <div className="bg-gradient-to-br from-[#1A1A1F] to-[#252529] border border-[#2D2D33] rounded-lg p-6 text-center hover:border-[#9B59B6]/50 transition-all">
+                <div className="text-3xl mb-3">🗳️</div>
+                <h4 className="text-lg font-medium text-[#FAFAFA] mb-2">Shape the Story</h4>
+                <p className="text-sm text-[#A8A8B3]">Vote on character routes and plot developments</p>
+              </div>
+              <div className="bg-gradient-to-br from-[#1A1A1F] to-[#252529] border border-[#2D2D33] rounded-lg p-6 text-center hover:border-[#FF6B9D]/50 transition-all">
+                <div className="text-3xl mb-3">💬</div>
+                <h4 className="text-lg font-medium text-[#FAFAFA] mb-2">Dev Access</h4>
+                <p className="text-sm text-[#A8A8B3]">Direct communication with the development team</p>
+              </div>
+              <div className="bg-gradient-to-br from-[#1A1A1F] to-[#252529] border border-[#2D2D33] rounded-lg p-6 text-center hover:border-[#FF4757]/50 transition-all">
+                <div className="text-3xl mb-3">🎁</div>
+                <h4 className="text-lg font-medium text-[#FAFAFA] mb-2">Early Access</h4>
+                <p className="text-sm text-[#A8A8B3]">Play new content weeks before public release</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Social proof */}
+          <div className="mt-16 text-center">
+            <p className="text-sm text-[#A8A8B3] mb-4">Join 127+ patrons supporting Roll to Seduce</p>
+            <div className="flex justify-center gap-4">
+              <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer" 
+                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF424D] hover:bg-[#E63946] transition-colors rounded-full text-white font-medium">
+                <span>Support on Patreon</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+              <button className="px-6 py-3 border border-[#2D2D33] hover:border-[#3D3D44] bg-[#1A1A1F] hover:bg-[#252529] rounded-full text-[#E5E5E7] transition-all">
+                Alternative Platforms
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Enhanced Download section with instant downloads */}
       <section id="download-section" className="py-24 px-8 bg-gradient-to-t from-[#1A1A1F]/20 to-transparent">
         <div className="max-w-7xl mx-auto">
