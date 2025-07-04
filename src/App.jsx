@@ -1029,15 +1029,15 @@ const RollToSeduceWebsite = () => {
             <div className="bg-gradient-to-r from-[#1A1A1F]/90 to-[#252529]/90 backdrop-blur-sm border border-[#9B59B6]/30 rounded-lg p-8">
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div>
-                  <div className="text-4xl font-light text-[#9B59B6] mb-2">127</div>
+                  <div className="text-4xl font-light text-[#9B59B6] mb-2">35+</div>
                   <p className="text-sm text-[#A8A8B3] tracking-wider">ACTIVE PATRONS</p>
                 </div>
                 <div>
-                  <div className="text-4xl font-light text-[#FF6B9D] mb-2">$1,847</div>
+                  <div className="text-4xl font-light text-[#FF6B9D] mb-2">$146.6+</div>
                   <p className="text-sm text-[#A8A8B3] tracking-wider">MONTHLY SUPPORT</p>
                 </div>
                 <div>
-                  <div className="text-4xl font-light text-[#FF4757] mb-2">89%</div>
+                  <div className="text-4xl font-light text-[#FF4757] mb-2">20%</div>
                   <p className="text-sm text-[#A8A8B3] tracking-wider">TO NEXT GOAL</p>
                 </div>
               </div>
@@ -1258,7 +1258,7 @@ const RollToSeduceWebsite = () => {
 
           {/* Social proof */}
           <div className="mt-16 text-center">
-            <p className="text-sm text-[#A8A8B3] mb-4">Join 127+ patrons supporting Roll to Seduce</p>
+            <p className="text-sm text-[#A8A8B3] mb-4">Join 35+ patrons supporting Roll to Seduce</p>
             <div className="flex justify-center gap-4">
               <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer" 
                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF424D] hover:bg-[#E63946] transition-colors rounded-full text-white font-medium">
