@@ -5,6 +5,10 @@ const RollToSeduceWebsite = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [downloadStates, setDownloadStates] = useState({
+    windows: 'idle',
+    android: 'idle'
+  });
   const canvasRef = useRef(null);
 
   // Character data matching the dark fantasy theme
@@ -50,6 +54,60 @@ const RollToSeduceWebsite = () => {
       colors: ['#FF6B9D', '#C44569']
     }
   ];
+
+  // Download configurations
+  const downloadConfigs = {
+    windows: {
+      url: 'https://github.com/rolltoseduce/releases/download/v2.0/RTS_v2.0_Windows.zip',
+      filename: 'RollToSeduce_v2.0_Windows.zip',
+      size: '2.8 GB',
+      version: 'v2.0.4'
+    },
+    android: {
+      url: 'https://github.com/rolltoseduce/releases/download/v2.0/RTS_v2.0_Android.apk',
+      filename: 'RollToSeduce_v2.0_Android.apk',
+      size: '1.2 GB',
+      version: 'v2.0.4'
+    }
+  };
+
+  // Enhanced download handler with progress simulation
+  const handleDownload = async (platform) => {
+    setDownloadStates(prev => ({ ...prev, [platform]: 'downloading' }));
+    
+    try {
+      // Create invisible anchor element for download
+      const link = document.createElement('a');
+      link.href = downloadConfigs[platform].url;
+      link.download = downloadConfigs[platform].filename;
+      link.style.display = 'none';
+      
+      // Add to body and trigger download
+      document.body.appendChild(link);
+      link.click();
+      
+      // Simulate download progress
+      setTimeout(() => {
+        setDownloadStates(prev => ({ ...prev, [platform]: 'complete' }));
+        
+        // Reset state after 3 seconds
+        setTimeout(() => {
+          setDownloadStates(prev => ({ ...prev, [platform]: 'idle' }));
+        }, 3000);
+      }, 2000);
+      
+      // Clean up
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Download failed:', error);
+      setDownloadStates(prev => ({ ...prev, [platform]: 'error' }));
+      
+      // Reset error state after 3 seconds
+      setTimeout(() => {
+        setDownloadStates(prev => ({ ...prev, [platform]: 'idle' }));
+      }, 3000);
+    }
+  };
 
   // Mouse tracking for interactive effects
   useEffect(() => {
@@ -141,6 +199,44 @@ const RollToSeduceWebsite = () => {
     };
   }, []);
 
+  // Download button content based on state
+  const getDownloadButtonContent = (platform, defaultContent) => {
+    const state = downloadStates[platform];
+    
+    switch(state) {
+      case 'downloading':
+        return (
+          <>
+            <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>DOWNLOADING...</span>
+          </>
+        );
+      case 'complete':
+        return (
+          <>
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+            <span>DOWNLOAD COMPLETE!</span>
+          </>
+        );
+      case 'error':
+        return (
+          <>
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <span>DOWNLOAD FAILED - RETRY</span>
+          </>
+        );
+      default:
+        return defaultContent;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0F0F12] text-[#FAFAFA] overflow-hidden">
       {/* Animated background */}
@@ -216,8 +312,7 @@ const RollToSeduceWebsite = () => {
           <div className="flex gap-6 justify-center mb-8">
             <button 
               className="group relative px-10 py-4 overflow-hidden"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              onClick={() => document.getElementById('download-section').scrollIntoView({ behavior: 'smooth' })}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-[#FF4757] to-[#9B59B6] transform transition-transform group-hover:scale-110" />
               <div className="absolute inset-[2px] bg-[#0F0F12]" />
@@ -299,7 +394,7 @@ const RollToSeduceWebsite = () => {
                   <p className="text-2xl font-serif italic text-[#FF4757]/80 mb-2">
                     "Your corruption begins now..."
                   </p>
-                  <p className="text-sm text-[#A8A8B3]">Chapter 1: The Summoning</p>
+                  <p className="text-sm text-[#A8A8B3]">Begin your descent into darkness</p>
                 </div>
               </div>
             </div>
@@ -362,664 +457,283 @@ const RollToSeduceWebsite = () => {
         </div>
       </section>
 
-      {/* Features section */}
-      <section className="py-24 px-8 relative">
-        <div className="max-w-6xl mx-auto relative z-10">
+      {/* Enhanced Download section with instant downloads */}
+      <section id="download-section" className="py-24 px-8 bg-gradient-to-t from-[#1A1A1F]/20 to-transparent">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-serif font-light mb-6">
-              Unity <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Excellence</span>
+            <h2 className="text-6xl font-serif font-light mb-8">
+              Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] via-[#9B59B6] to-[#FF6B9D] italic">Play?</span>
             </h2>
-            <p className="text-xl text-[#E5E5E7]">
-              Premium visual novel features powered by cutting-edge technology
+            <p className="text-xl text-[#E5E5E7] mb-4">
+              Experience the world of Roll to Seduce in stunning visual novel format
+            </p>
+            <p className="text-sm text-[#A8A8B3]">
+              Direct downloads • No registration • Instant access
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="group text-center p-8 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#FF4757]/50 transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF4757] to-[#9B59B6] rounded-full flex items-center justify-center">
-                <span className="text-2xl">🔥</span>
-              </div>
-              <h3 className="text-xl mb-3 font-medium text-[#FAFAFA]">Stunning Artwork</h3>
-              <p className="text-[#E5E5E7] text-sm">
-                Hand-drawn CGs with multiple variations and dynamic expressions
-              </p>
-            </div>
-            <div className="group text-center p-8 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#9B59B6]/50 transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#9B59B6] to-[#FF6B9D] rounded-full flex items-center justify-center">
-                <span className="text-2xl">💋</span>
-              </div>
-              <h3 className="text-xl mb-3 font-medium text-[#FAFAFA]">Interactive Seduction</h3>
-              <p className="text-[#E5E5E7] text-sm">
-                Your choices shape how each temptress pursues you
-              </p>
-            </div>
-            <div className="group text-center p-8 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#FF6B9D]/50 transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B9D] to-[#FF4757] rounded-full flex items-center justify-center">
-                <span className="text-2xl">🌙</span>
-              </div>
-              <h3 className="text-xl mb-3 font-medium text-[#FAFAFA]">Dark Romance</h3>
-              <p className="text-[#E5E5E7] text-sm">
-                Where love and damnation intertwine beautifully
-              </p>
-            </div>
-          </div>
-
-          {/* Unity specific features */}
-          <div className="bg-[#1A1A1F] border border-[#2D2D33] p-8">
-            <h3 className="text-2xl font-medium mb-8 text-center text-[#FAFAFA]">
-              Advanced Game Features
-            </h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <div className="flex items-start gap-3">
-                  <span className="text-[#9B59B6] mt-1 text-lg">▸</span>
-                  <div>
-                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Enhanced Graphics</h4>
-                    <p className="text-sm text-[#E5E5E7] mt-1">Unity's powerful rendering for stunning visual effects</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-[#9B59B6] mt-1 text-lg">▸</span>
-                  <div>
-                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Smooth Animations</h4>
-                    <p className="text-sm text-[#E5E5E7] mt-1">60 FPS character animations and transitions</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-[#9B59B6] mt-1 text-lg">▸</span>
-                  <div>
-                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Dynamic Audio</h4>
-                    <p className="text-sm text-[#E5E5E7] mt-1">3D positional audio and atmospheric soundscapes</p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-6">
-                <div className="flex items-start gap-3">
-                  <span className="text-[#FF4757] mt-1 text-lg">▸</span>
-                  <div>
-                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Advanced Save System</h4>
-                    <p className="text-sm text-[#E5E5E7] mt-1">Cloud saves with unlimited slots and thumbnails</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-[#FF4757] mt-1 text-lg">▸</span>
-                  <div>
-                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Gallery & Achievements</h4>
-                    <p className="text-sm text-[#E5E5E7] mt-1">Unlock system with Steam achievement integration</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-[#FF4757] mt-1 text-lg">▸</span>
-                  <div>
-                    <h4 className="text-[#FAFAFA] font-semibold text-lg">Cross-Platform Play</h4>
-                    <p className="text-sm text-[#E5E5E7] mt-1">Seamless experience across PC, Mac, and Linux</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Development Roadmap */}
-      <section className="py-24 px-8 bg-gradient-to-b from-transparent via-[#1A1A1F]/20 to-transparent">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-serif font-light mb-6">
-              Development <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Roadmap</span>
-            </h2>
-            <p className="text-xl text-[#E5E5E7]">
-              Join us on the journey to v1.0 and beyond
-            </p>
-          </div>
-
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-[#FF4757]/50 via-[#9B59B6]/50 to-[#FF6B9D]/50"></div>
-            
-            <div className="space-y-12">
-              {/* Current version */}
-              <div className="relative flex items-center">
-                <div className="flex-1 text-right pr-8">
-                  <h3 className="text-2xl font-light text-[#FF4757]">Version 2.0</h3>
-                  <p className="text-[#A8A8B3] mt-1">Current Build</p>
-                </div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#FF4757] rounded-full ring-4 ring-[#FF4757]/20 animate-pulse"></div>
-                <div className="flex-1 pl-8">
-                  <ul className="text-sm text-[#E5E5E7] space-y-1">
-                    <li>• 2 Complete character routes</li>
-                    <li>• 15+ CG scenes</li>
-                    <li>• Basic save system</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Upcoming */}
-              <div className="relative flex items-center opacity-75">
-                <div className="flex-1 text-right pr-8">
-                  <h3 className="text-2xl font-light text-[#9B59B6]">Version 2.5</h3>
-                  <p className="text-[#A8A8B3] mt-1">Q2 2025</p>
-                </div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#2D2D33] rounded-full"></div>
-                <div className="flex-1 pl-8">
-                  <ul className="text-sm text-[#A8A8B3] space-y-1">
-                    <li>• Morgana route completion</li>
-                    <li>• Voice acting integration</li>
-                    <li>• Gallery mode</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Future */}
-              <div className="relative flex items-center opacity-50">
-                <div className="flex-1 text-right pr-8">
-                  <h3 className="text-2xl font-light text-[#FF6B9D]">Version 3.0</h3>
-                  <p className="text-[#A8A8B3] mt-1">Q3 2025</p>
-                </div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#2D2D33] rounded-full"></div>
-                <div className="flex-1 pl-8">
-                  <ul className="text-sm text-[#A8A8B3] space-y-1">
-                    <li>• Final character route</li>
-                    <li>• Multiple endings system</li>
-                    <li>• Steam achievements</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Patreon Integration Section */}
-      <section className="py-24 px-8 relative overflow-hidden">
-        {/* Animated background gradient */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#9B59B6] rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF6B9D] rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          {/* Header with Patreon branding */}
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#F96854] to-[#FF424D] rounded-full flex items-center justify-center">
-                <span className="text-white text-xl font-bold">P</span>
-              </div>
-              <span className="text-sm text-[#A8A8B3] tracking-wider">OFFICIAL PATREON</span>
-            </div>
-            <h2 className="text-5xl md:text-6xl font-serif font-light mb-6">
-              Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] via-[#9B59B6] to-[#FF6B9D]">Inner Circle</span>
-            </h2>
-            <p className="text-xl text-[#E5E5E7] max-w-3xl mx-auto leading-relaxed">
-              Unlock exclusive content, influence development, and become part of an intimate community 
-              shaping the most seductive visual novel experience ever created
-            </p>
-          </div>
-
-          {/* Enhanced tier design */}
-          <div className="grid lg:grid-cols-3 gap-8 mb-16">
-            {/* Tier 1 */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-[#FF4757]/20 to-transparent rounded-lg transform rotate-3 group-hover:rotate-1 transition-transform"></div>
-              <div className="relative bg-[#1A1A1F] border border-[#2D2D33] rounded-lg p-8 hover:border-[#FF4757]/50 transition-all">
+          {/* Main download section */}
+          <div className="max-w-4xl mx-auto">
+            {/* Download cards */}
+            <div className="grid md:grid-cols-2 gap-8 mb-12">
+              {/* Windows Download */}
+              <div className="bg-[#1A1A1F] border border-[#2D2D33] rounded-lg p-8 hover:border-[#FF4757]/50 transition-all">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-light text-[#FAFAFA]">Tempted Soul</h3>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FF4757] to-[#C44569] flex items-center justify-center">
-                    <span className="text-lg">🔥</span>
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#0078D4] to-[#40E0D0] rounded-lg flex items-center justify-center">
+                      <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 5.5V18.5Q3 19.35 3.575 19.925Q4.15 20.5 5 20.5H19Q19.85 20.5 20.425 19.925Q21 19.35 21 18.5V5.5Q21 4.65 20.425 4.075Q19.85 3.5 19 3.5H5Q4.15 3.5 3.575 4.075Q3 4.65 3 5.5ZM5 5.5H19Q19 5.5 19 5.5Q19 5.5 19 5.5V18.5Q19 18.5 19 18.5Q19 18.5 19 18.5H5Q5 18.5 5 18.5Q5 18.5 5 18.5V5.5Q5 5.5 5 5.5Q5 5.5 5 5.5ZM5 5.5V18.5Q5 18.5 5 18.5Q5 18.5 5 18.5Q5 18.5 5 18.5Q5 18.5 5 18.5V5.5Q5 5.5 5 5.5Q5 5.5 5 5.5Q5 5.5 5 5.5Q5 5.5 5 5.5Z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-light text-[#FAFAFA]">Windows</h3>
+                      <p className="text-sm text-[#A8A8B3]">64-bit • DirectX 11</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-[#2ECC71]">RECOMMENDED</span>
+                </div>
+
+                <div className="space-y-4 mb-6">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-[#A8A8B3]">Version</span>
+                    <span className="text-[#E5E5E7] font-medium">{downloadConfigs.windows.version}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-[#A8A8B3]">File Size</span>
+                    <span className="text-[#E5E5E7] font-medium">{downloadConfigs.windows.size}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-[#A8A8B3]">Requirements</span>
+                    <span className="text-[#E5E5E7] font-medium">Windows 10+</span>
                   </div>
                 </div>
-                
-                <div className="mb-6">
-                  <span className="text-4xl font-light text-[#FF4757]">$5</span>
-                  <span className="text-[#A8A8B3]">/month</span>
-                </div>
 
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#FF4757] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#E5E5E7] text-sm">Early access to all game updates</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#FF4757] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#E5E5E7] text-sm">Exclusive Discord role & channels</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#FF4757] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#E5E5E7] text-sm">Your name in game credits</span>
-                  </li>
-                </ul>
-
-                <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer">
-                  <button className="w-full py-3 border border-[#2D2D33] hover:border-[#FF4757] bg-[#252529] hover:bg-[#FF4757]/10 transition-all text-[#FAFAFA] font-medium tracking-wider">
-                    BECOME A PATRON
-                  </button>
-                </a>
-              </div>
-            </div>
-
-            {/* Tier 2 - Featured */}
-            <div className="group relative transform lg:scale-110 z-10">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-[#9B59B6] to-[#FF6B9D] rounded-full">
-                <span className="text-xs font-medium tracking-wider">MOST POPULAR</span>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-b from-[#9B59B6]/30 to-[#FF6B9D]/30 rounded-lg blur-xl"></div>
-              <div className="relative bg-[#1A1A1F] border-2 border-[#9B59B6]/50 rounded-lg p-8 hover:border-[#9B59B6] transition-all shadow-2xl">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-light text-[#FAFAFA]">Corrupted Heart</h3>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#9B59B6] to-[#FF6B9D] flex items-center justify-center">
-                    <span className="text-lg">💜</span>
-                  </div>
-                </div>
-                
-                <div className="mb-6">
-                  <span className="text-4xl font-light text-[#9B59B6]">$15</span>
-                  <span className="text-[#A8A8B3]">/month</span>
-                </div>
-
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#9B59B6] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#FAFAFA] text-sm font-medium">Everything from Tempted Soul</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#9B59B6] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#FAFAFA] text-sm">Vote on story directions & features</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#9B59B6] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#FAFAFA] text-sm">Exclusive NSFW art & scenes</span>
-                  </li>
-                </ul>
-
-                <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer">
-                  <button className="w-full py-3 bg-gradient-to-r from-[#9B59B6] to-[#FF6B9D] hover:from-[#8E44AD] hover:to-[#EC4899] transition-all text-white font-medium tracking-wider shadow-lg">
-                    BECOME A PATRON
-                  </button>
-                </a>
-              </div>
-            </div>
-
-            {/* Tier 3 */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-[#FF6B9D]/20 to-transparent rounded-lg transform -rotate-3 group-hover:-rotate-1 transition-transform"></div>
-              <div className="relative bg-[#1A1A1F] border border-[#2D2D33] rounded-lg p-8 hover:border-[#FF6B9D]/50 transition-all">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-light text-[#FAFAFA]">Damned Devotee</h3>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FF6B9D] to-[#FF4757] flex items-center justify-center">
-                    <span className="text-lg">👹</span>
-                  </div>
-                </div>
-                
-                <div className="mb-6">
-                  <span className="text-4xl font-light text-[#FF6B9D]">$30</span>
-                  <span className="text-[#A8A8B3]">/month</span>
-                </div>
-
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#FF6B9D] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#E5E5E7] text-sm">Everything from lower tiers</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#FF6B9D] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#E5E5E7] text-sm">Design a background character</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-[#FF6B9D] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 5.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 011.414 0z"/>
-                    </svg>
-                    <span className="text-[#E5E5E7] text-sm">Monthly video call with developer</span>
-                  </li>
-                </ul>
-
-                <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer">
-                  <button className="w-full py-3 border border-[#2D2D33] hover:border-[#FF6B9D] bg-[#252529] hover:bg-[#FF6B9D]/10 transition-all text-[#FAFAFA] font-medium tracking-wider">
-                    BECOME A PATRON
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Social proof */}
-          <div className="mt-16 text-center">
-            <p className="text-sm text-[#A8A8B3] mb-4">Join 127+ patrons supporting Roll to Seduce</p>
-            <div className="flex justify-center gap-4">
-              <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer" 
-                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF424D] hover:bg-[#E63946] transition-colors rounded-full text-white font-medium">
-                <span>Support on Patreon</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-              <button className="px-6 py-3 border border-[#2D2D33] hover:border-[#3D3D44] bg-[#1A1A1F] hover:bg-[#252529] rounded-full text-[#E5E5E7] transition-all">
-                Alternative Platforms
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Latest Updates */}
-      <section className="py-24 px-8 bg-gradient-to-t from-[#1A1A1F]/20 to-transparent">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-serif font-light mb-6">
-              Latest <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Updates</span>
-            </h2>
-            <p className="text-xl text-[#E5E5E7]">
-              Fresh from the development hell
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-[#1A1A1F] border border-[#2D2D33] p-8 hover:border-[#FF4757]/50 transition-all">
-              <div className="flex items-start justify-between mb-4">
-                <span className="px-3 py-1 bg-[#FF4757]/20 text-[#FF4757] text-xs tracking-wider">PATCH NOTES</span>
-                <span className="text-xs text-[#A8A8B3]">2 days ago</span>
-              </div>
-              <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Version 2.0 Released!</h3>
-              <p className="text-[#E5E5E7] mb-4">
-                Major update bringing Lilith's complete route with 7 new CG scenes, 
-                improved dialogue system, and bug fixes based on community feedback.
-              </p>
-              <button className="text-sm text-[#FF4757] hover:text-[#FF6B9D] transition-colors">
-                Read full notes →
-              </button>
-            </div>
-
-            <div className="bg-[#1A1A1F] border border-[#2D2D33] p-8 hover:border-[#9B59B6]/50 transition-all">
-              <div className="flex items-start justify-between mb-4">
-                <span className="px-3 py-1 bg-[#9B59B6]/20 text-[#9B59B6] text-xs tracking-wider">DEV BLOG</span>
-                <span className="text-xs text-[#A8A8B3]">1 week ago</span>
-              </div>
-              <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Behind the Scenes: Morgana</h3>
-              <p className="text-[#E5E5E7] mb-4">
-                Dive into the creative process behind our fallen angel. See concept art, 
-                story drafts, and learn how community feedback shaped her character.
-              </p>
-              <button className="text-sm text-[#9B59B6] hover:text-[#FF6B9D] transition-colors">
-                Continue reading →
-              </button>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <button className="px-8 py-3 border border-[#2D2D33] hover:border-[#FF4757]/50 bg-[#1A1A1F] hover:bg-[#252529] text-[#E5E5E7] hover:text-[#FF4757] transition-all tracking-wider">
-              VIEW ALL UPDATES
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Community section */}
-      <section className="py-24 px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-serif font-light mb-6">
-              Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] to-[#9B59B6]">Cult</span>
-            </h2>
-            <p className="text-xl text-[#E5E5E7]">
-              A thriving community of sinners shaping the game together
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="text-center p-8 bg-[#1A1A1F] border border-[#2D2D33]">
-              <div className="text-4xl mb-4">💬</div>
-              <h3 className="text-2xl font-light mb-2 text-[#FAFAFA]">Discord Community</h3>
-              <p className="text-[#E5E5E7] mb-4">2,500+ active members</p>
-              <p className="text-sm text-[#A8A8B3]">
-                Daily discussions, exclusive previews, and direct dev interaction
-              </p>
-            </div>
-            
-            <div className="text-center p-8 bg-[#1A1A1F] border border-[#2D2D33]">
-              <div className="text-4xl mb-4">🎨</div>
-              <h3 className="text-2xl font-light mb-2 text-[#FAFAFA]">Fan Creations</h3>
-              <p className="text-[#E5E5E7] mb-4">500+ artworks</p>
-              <p className="text-sm text-[#A8A8B3]">
-                Community showcase featuring incredible fan art and stories
-              </p>
-            </div>
-            
-            <div className="text-center p-8 bg-[#1A1A1F] border border-[#2D2D33]">
-              <div className="text-4xl mb-4">🗳️</div>
-              <h3 className="text-2xl font-light mb-2 text-[#FAFAFA]">Shape Development</h3>
-              <p className="text-[#E5E5E7] mb-4">Weekly polls</p>
-              <p className="text-sm text-[#A8A8B3]">
-                Vote on features, characters, and story directions
-              </p>
-            </div>
-          </div>
-
-          {/* Newsletter signup */}
-          <div className="max-w-2xl mx-auto text-center p-8 bg-gradient-to-r from-[#FF4757]/10 to-[#9B59B6]/10 border border-[#FF4757]/30">
-            <h3 className="text-2xl font-light mb-4 text-[#FAFAFA]">Stay Corrupted</h3>
-            <p className="text-[#E5E5E7] mb-6">
-              Monthly dev updates, exclusive art, and early access announcements
-            </p>
-            <div className="flex gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="your.soul@email.com" 
-                className="flex-1 px-4 py-3 bg-[#1A1A1F] border border-[#2D2D33] focus:border-[#FF4757] outline-none transition-colors text-[#FAFAFA] placeholder-[#A8A8B3]"
-              />
-              <button className="px-6 py-3 bg-gradient-to-r from-[#FF4757] to-[#9B59B6] hover:from-[#E53E3E] hover:to-[#8E44AD] transition-all text-white font-medium">
-                SUBMIT
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Download section */}
-      <section className="py-24 px-8 bg-gradient-to-t from-[#1A1A1F]/20 to-transparent">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-6xl font-serif font-light mb-8">
-            Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4757] via-[#9B59B6] to-[#FF6B9D] italic">Play?</span>
-          </h2>
-          
-          <p className="text-xl text-[#E5E5E7] mb-12">
-            Experience the world of Roll to Seduce in stunning visual novel format
-          </p>
-
-          {/* Demo download */}
-          <div className="max-w-2xl mx-auto mb-16">
-            <div className="p-8 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#FF4757]/50 transition-all">
-              <h3 className="text-3xl font-light mb-4 text-[#FAFAFA]">Demo Version 2.0</h3>
-              <p className="text-[#E5E5E7] text-lg mb-6">Experience the beginning of your corruption</p>
-              
-              <div className="grid md:grid-cols-3 gap-4 mb-8 text-left">
-                <div className="text-center">
-                  <div className="text-2xl text-[#FF4757] mb-2">2</div>
-                  <p className="text-sm text-[#E5E5E7]">Full Chapters</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl text-[#9B59B6] mb-2">15+</div>
-                  <p className="text-sm text-[#E5E5E7]">CG Scenes</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl text-[#FF6B9D] mb-2">4</div>
-                  <p className="text-sm text-[#E5E5E7]">Characters</p>
-                </div>
-              </div>
-              
-              <div className="mb-8 p-4 bg-[#252529] rounded">
-                <p className="text-sm text-[#E5E5E7] mb-2">Demo includes:</p>
-                <ul className="text-sm text-[#FAFAFA] space-y-1">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#FF4757] mt-0.5">♦</span>
-                    <span>First two chapters of each character route</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#9B59B6] mt-0.5">♦</span>
-                    <span>Preview of the gallery system with select scenes</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#FF6B9D] mt-0.5">♦</span>
-                    <span>Full save/load functionality to continue in full version</span>
-                  </li>
-                </ul>
-              </div>
-              
-              {/* Platform-specific download buttons */}
-              <div className="grid md:grid-cols-2 gap-4 mb-6">
                 <button 
-                  onClick={() => {
-                    // Direct download for Windows
-                    const link = document.createElement('a');
-                    link.href = '/downloads/RTS_0.02_4.zip'; // Update with your actual file path
-                    link.download = 'RTS_0.02_4.zip';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                  }}
-                  className="w-full py-4 bg-gradient-to-r from-[#FF4757] to-[#9B59B6] hover:from-[#E53E3E] hover:to-[#8E44AD] transition-all text-white font-medium tracking-wider flex items-center justify-center gap-3 transform hover:scale-[1.02] active:scale-[0.98]"
+                  onClick={() => handleDownload('windows')}
+                  disabled={downloadStates.windows === 'downloading'}
+                  className={`w-full py-4 font-medium tracking-wider flex items-center justify-center gap-3 transition-all transform
+                    ${downloadStates.windows === 'downloading' 
+                      ? 'bg-[#252529] cursor-wait' 
+                      : downloadStates.windows === 'complete'
+                      ? 'bg-gradient-to-r from-[#2ECC71] to-[#27AE60]'
+                      : downloadStates.windows === 'error'
+                      ? 'bg-gradient-to-r from-[#E74C3C] to-[#C0392B]'
+                      : 'bg-gradient-to-r from-[#FF4757] to-[#9B59B6] hover:from-[#E53E3E] hover:to-[#8E44AD] hover:scale-[1.02] active:scale-[0.98]'
+                    } text-white`}
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M3 5.5V18.5Q3 19.35 3.575 19.925Q4.15 20.5 5 20.5H19Q19.85 20.5 20.425 19.925Q21 19.35 21 18.5V5.5Q21 4.65 20.425 4.075Q19.85 3.5 19 3.5H5Q4.15 3.5 3.575 4.075Q3 4.65 3 5.5ZM5 5.5H19Q19 5.5 19 5.5Q19 5.5 19 5.5V18.5Q19 18.5 19 18.5Q19 18.5 19 18.5H5Q5 18.5 5 18.5Q5 18.5 5 18.5V5.5Q5 5.5 5 5.5Q5 5.5 5 5.5ZM5 5.5V18.5Q5 18.5 5 18.5Q5 18.5 5 18.5Q5 18.5 5 18.5Q5 18.5 5 18.5V5.5Q5 5.5 5 5.5Q5 5.5 5 5.5Q5 5.5 5 5.5Q5 5.5 5 5.5Z"/>
-                  </svg>
-                  <span>DOWNLOAD FOR WINDOWS</span>
-                  <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </button>
-                
-                <button 
-                  onClick={() => {
-                    // Direct download for Android
-                    const link = document.createElement('a');
-                    link.href = '/downloads/RollToSeduce_v2.0.apk'; // Update with your actual file path
-                    link.download = 'RollToSeduce_v2.0.apk';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                  }}
-                  className="w-full py-4 bg-gradient-to-r from-[#3DDC84] to-[#00C853] hover:from-[#34C271] hover:to-[#00A843] transition-all text-white font-medium tracking-wider flex items-center justify-center gap-3 transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 00-.83.22l-1.88 3.24a11.463 11.463 0 00-8.94 0L5.65 5.67a.643.643 0 00-.87-.2c-.28.18-.37.54-.2.83L6.42 9.48A10.78 10.78 0 001 18.56h22A10.78 10.78 0 0017.6 9.48zM7 15.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm10 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/>
-                  </svg>
-                  <span>DOWNLOAD FOR ANDROID</span>
-                  <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
+                  {getDownloadButtonContent('windows', (
+                    <>
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                      <span>DOWNLOAD FOR WINDOWS</span>
+                    </>
+                  ))}
                 </button>
               </div>
+
+              {/* Android Download */}
+              <div className="bg-[#1A1A1F] border border-[#2D2D33] rounded-lg p-8 hover:border-[#3DDC84]/50 transition-all">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#3DDC84] to-[#00C853] rounded-lg flex items-center justify-center">
+                      <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 00-.83.22l-1.88 3.24a11.463 11.463 0 00-8.94 0L5.65 5.67a.643.643 0 00-.87-.2c-.28.18-.37.54-.2.83L6.42 9.48A10.78 10.78 0 001 18.56h22A10.78 10.78 0 0017.6 9.48zM7 15.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm10 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-light text-[#FAFAFA]">Android</h3>
+                      <p className="text-sm text-[#A8A8B3]">APK • OpenGL ES 3.0</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-[#FF6B9D]">MOBILE</span>
+                </div>
+
+                <div className="space-y-4 mb-6">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-[#A8A8B3]">Version</span>
+                    <span className="text-[#E5E5E7] font-medium">{downloadConfigs.android.version}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-[#A8A8B3]">File Size</span>
+                    <span className="text-[#E5E5E7] font-medium">{downloadConfigs.android.size}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-[#A8A8B3]">Requirements</span>
+                    <span className="text-[#E5E5E7] font-medium">Android 7.0+</span>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => handleDownload('android')}
+                  disabled={downloadStates.android === 'downloading'}
+                  className={`w-full py-4 font-medium tracking-wider flex items-center justify-center gap-3 transition-all transform
+                    ${downloadStates.android === 'downloading' 
+                      ? 'bg-[#252529] cursor-wait' 
+                      : downloadStates.android === 'complete'
+                      ? 'bg-gradient-to-r from-[#2ECC71] to-[#27AE60]'
+                      : downloadStates.android === 'error'
+                      ? 'bg-gradient-to-r from-[#E74C3C] to-[#C0392B]'
+                      : 'bg-gradient-to-r from-[#3DDC84] to-[#00C853] hover:from-[#34C271] hover:to-[#00A843] hover:scale-[1.02] active:scale-[0.98]'
+                    } text-white`}
+                >
+                  {getDownloadButtonContent('android', (
+                    <>
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                      <span>DOWNLOAD FOR ANDROID</span>
+                    </>
+                  ))}
+                </button>
+              </div>
+            </div>
+
+            {/* Demo features */}
+            <div className="bg-[#252529] rounded-lg p-8 mb-12">
+              <h3 className="text-2xl font-light mb-6 text-center text-[#FAFAFA]">Demo Version 2.0 Includes</h3>
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="text-3xl font-light text-[#FF4757] mb-2">2</div>
+                  <p className="text-[#E5E5E7]">Complete Routes</p>
+                  <p className="text-xs text-[#A8A8B3] mt-1">Lilith & Morgana</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-light text-[#9B59B6] mb-2">15+</div>
+                  <p className="text-[#E5E5E7]">CG Scenes</p>
+                  <p className="text-xs text-[#A8A8B3] mt-1">Fully unlockable</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-light text-[#FF6B9D] mb-2">3+</div>
+                  <p className="text-[#E5E5E7]">Hours Gameplay</p>
+                  <p className="text-xs text-[#A8A8B3] mt-1">Per route</p>
+                </div>
+              </div>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-start gap-3">
+                  <span className="text-[#2ECC71] mt-0.5">✓</span>
+                  <span className="text-[#E5E5E7]">Full save system - continue your progress in the full version</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#2ECC71] mt-0.5">✓</span>
+                  <span className="text-[#E5E5E7]">Gallery mode with unlockable CGs and scene replay</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#2ECC71] mt-0.5">✓</span>
+                  <span className="text-[#E5E5E7]">Multiple endings for each character route</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#2ECC71] mt-0.5">✓</span>
+                  <span className="text-[#E5E5E7]">Full controller support and customizable settings</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Additional download options */}
+            <div className="text-center mb-12">
+              <p className="text-sm text-[#A8A8B3] mb-4">Need help installing? Check our <a href="#" className="text-[#FF4757] hover:text-[#FF6B9D] transition-colors">installation guide</a></p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <a href="https://2girls1game.itch.io/roll-to-seduce" target="_blank" rel="noopener noreferrer" 
+                   className="inline-flex items-center gap-2 px-6 py-2 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#FF4757]/50 rounded-lg transition-all">
+                  <span className="text-sm text-[#E5E5E7]">Download from itch.io</span>
+                  <svg className="w-4 h-4 text-[#A8A8B3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+                <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer" 
+                   className="inline-flex items-center gap-2 px-6 py-2 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#9B59B6]/50 rounded-lg transition-all">
+                  <span className="text-sm text-[#E5E5E7]">Full version on Patreon</span>
+                  <svg className="w-4 h-4 text-[#A8A8B3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* System requirements */}
+            <div className="bg-[#1A1A1F] border border-[#2D2D33] rounded-lg p-8">
+              <h4 className="text-lg font-medium text-[#FF4757] mb-6">System Requirements</h4>
               
-              <div className="text-center mb-4">
-                <p className="text-xs text-[#A8A8B3]">
-                  <span className="inline-block w-2 h-2 bg-[#2ECC71] rounded-full animate-pulse mr-2"></span>
-                  Direct download • No external redirects • Instant access
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h5 className="text-[#9B59B6] mb-4 flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M3 5.5V18.5Q3 19.35 3.575 19.925Q4.15 20.5 5 20.5H19Q19.85 20.5 20.425 19.925Q21 19.35 21 18.5V5.5Q21 4.65 20.425 4.075Q19.85 3.5 19 3.5H5Q4.15 3.5 3.575 4.075Q3 4.65 3 5.5Z"/>
+                    </svg>
+                    Windows Requirements
+                  </h5>
+                  <dl className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">OS:</dt>
+                      <dd className="text-[#E5E5E7]">Windows 10+ (64-bit)</dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">Processor:</dt>
+                      <dd className="text-[#E5E5E7]">2.5 GHz Dual Core</dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">Memory:</dt>
+                      <dd className="text-[#E5E5E7]">4 GB RAM</dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">Graphics:</dt>
+                      <dd className="text-[#E5E5E7]">DirectX 11</dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">Storage:</dt>
+                      <dd className="text-[#E5E5E7]">3 GB available</dd>
+                    </div>
+                  </dl>
+                </div>
+                
+                <div>
+                  <h5 className="text-[#3DDC84] mb-4 flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 00-.83.22l-1.88 3.24a11.463 11.463 0 00-8.94 0L5.65 5.67a.643.643 0 00-.87-.2c-.28.18-.37.54-.2.83L6.42 9.48A10.78 10.78 0 001 18.56h22A10.78 10.78 0 0017.6 9.48z"/>
+                    </svg>
+                    Android Requirements
+                  </h5>
+                  <dl className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">OS:</dt>
+                      <dd className="text-[#E5E5E7]">Android 7.0+</dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">RAM:</dt>
+                      <dd className="text-[#E5E5E7]">2 GB minimum</dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">Processor:</dt>
+                      <dd className="text-[#E5E5E7]">Snapdragon 625+</dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">GPU:</dt>
+                      <dd className="text-[#E5E5E7]">OpenGL ES 3.0</dd>
+                    </div>
+                    <div className="flex justify-between">
+                      <dt className="text-[#A8A8B3]">Storage:</dt>
+                      <dd className="text-[#E5E5E7]">1.5 GB available</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+              
+              <div className="mt-6 pt-6 border-t border-[#2D2D33]">
+                <p className="text-xs text-[#9B59B6] text-center">
+                  <span className="inline-block mr-2">🎮</span>
+                  Built with Unity 2022.3 LTS • Full controller support • Cloud save ready
                 </p>
               </div>
-              
-              <p className="text-xs text-[#A8A8B3] text-center">
-                Windows 10+ (64-bit) • Android 7.0+ • No registration required
-              </p>
             </div>
           </div>
 
-          {/* Community links */}
-          <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-8 mb-16">
-            <div className="p-6 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#9B59B6]/50 transition-all">
-              <h4 className="text-xl font-light mb-3 text-[#9B59B6]">Join Our Discord</h4>
-              <p className="text-[#E5E5E7] mb-4">
-                Connect with 2,500+ players, share fan art, and get development updates
-              </p>
-              <a href="https://discord.gg/grRXZDQvjy" target="_blank" rel="noopener noreferrer" className="text-[#9B59B6] hover:text-[#FF6B9D] transition-colors text-sm tracking-wider">
-                JOIN COMMUNITY →
-              </a>
-            </div>
-            
-            <div className="p-6 bg-[#1A1A1F] border border-[#2D2D33] hover:border-[#FF6B9D]/50 transition-all">
-              <h4 className="text-xl font-light mb-3 text-[#FF6B9D]">Support Development</h4>
-              <p className="text-[#E5E5E7] mb-4">
-                Help us create more content through Patreon or SubscribeStar
-              </p>
-              <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer" className="text-[#FF6B9D] hover:text-[#FF4757] transition-colors text-sm tracking-wider">
-                LEARN MORE →
-              </a>
-            </div>
-          </div>
-
-          {/* System requirements */}
-          <div className="max-w-2xl mx-auto text-left p-6 bg-[#1A1A1F] border border-[#2D2D33]">
-            <h4 className="text-sm tracking-wider text-[#FF4757] mb-3 font-medium">SYSTEM REQUIREMENTS</h4>
-            <div className="space-y-4">
-              <div>
-                <h5 className="text-[#9B59B6] text-sm mb-2">Windows Requirements</h5>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-[#A8A8B3]">OS:</span> <span className="text-[#FAFAFA]">Windows 10 or higher (64-bit)</span>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A8B3]">Processor:</span> <span className="text-[#FAFAFA]">2.5 GHz Dual Core</span>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A8B3]">Memory:</span> <span className="text-[#FAFAFA]">4 GB RAM</span>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A8B3]">Storage:</span> <span className="text-[#FAFAFA]">3 GB available space</span>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A8B3]">Graphics:</span> <span className="text-[#FAFAFA]">DirectX 11 compatible</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="border-t border-[#2D2D33] pt-4">
-                <h5 className="text-[#3DDC84] text-sm mb-2">Android Requirements</h5>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-[#A8A8B3]">OS:</span> <span className="text-[#FAFAFA]">Android 7.0 (API 24) or higher</span>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A8B3]">RAM:</span> <span className="text-[#FAFAFA]">2 GB minimum</span>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A8B3]">Storage:</span> <span className="text-[#FAFAFA]">1.5 GB available space</span>
-                  </div>
-                  <div>
-                    <span className="text-[#A8A8B3]">GPU:</span> <span className="text-[#FAFAFA]">OpenGL ES 3.0 support</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 pt-4 border-t border-[#2D2D33]">
-              <p className="text-xs text-[#9B59B6]">
-                <span className="inline-block mr-2">🎮</span>
-                Built with Unity • Full controller support • Auto-save functionality
-              </p>
-            </div>
-          </div>
-          
-          <div className="mt-12 space-y-2">
-            <p className="text-sm text-[#E5E5E7]">
-              <span className="text-[#A8A8B3]">Available on:</span> 
-              <a href="https://2girls1game.itch.io/roll-to-seduce" target="_blank" rel="noopener noreferrer" className="text-[#FF4757] hover:text-[#FF6B9D] transition-colors">itch.io</a> • 
-              <a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer" className="text-[#9B59B6] hover:text-[#FF6B9D] transition-colors">Patreon</a> • 
-              Steam (Coming Soon)
-            </p>
+          {/* Warning */}
+          <div className="mt-12 text-center">
             <p className="text-sm text-[#FF4757] font-medium">
               ⚠️ This game contains adult content and is intended for mature audiences only (18+)
+            </p>
+            <p className="text-xs text-[#A8A8B3] mt-2">
+              By downloading, you confirm you are of legal age in your jurisdiction
             </p>
           </div>
         </div>
@@ -1090,8 +804,8 @@ const RollToSeduceWebsite = () => {
                 
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-light mb-1" style={{ color: selectedCharacter.colors[0] }}>7</div>
-                    <div className="text-xs text-[#A8A8B3]">CHAPTERS</div>
+                    <div className="text-2xl font-light mb-1" style={{ color: selectedCharacter.colors[0] }}>100%</div>
+                    <div className="text-xs text-[#A8A8B3]">VOICED</div>
                   </div>
                   <div>
                     <div className="text-2xl font-light mb-1" style={{ color: selectedCharacter.colors[0] }}>5</div>
@@ -1131,8 +845,8 @@ const RollToSeduceWebsite = () => {
             <div>
               <h4 className="text-[#FF4757] mb-4 tracking-wider text-sm">GAME</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-[#A8A8B3] hover:text-[#FF4757] transition-colors">Download Demo</a></li>
-                <li><a href="#" className="text-[#A8A8B3] hover:text-[#FF4757] transition-colors">Early Access</a></li>
+                <li><a href="#download-section" className="text-[#A8A8B3] hover:text-[#FF4757] transition-colors">Download Demo</a></li>
+                <li><a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer" className="text-[#A8A8B3] hover:text-[#FF4757] transition-colors">Full Version</a></li>
                 <li><a href="#" className="text-[#A8A8B3] hover:text-[#FF4757] transition-colors">Gallery</a></li>
                 <li><a href="#" className="text-[#A8A8B3] hover:text-[#FF4757] transition-colors">Soundtrack</a></li>
               </ul>
@@ -1149,7 +863,7 @@ const RollToSeduceWebsite = () => {
             <div>
               <h4 className="text-[#FF6B9D] mb-4 tracking-wider text-sm">SUPPORT</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-[#A8A8B3] hover:text-[#FF6B9D] transition-colors">Patreon</a></li>
+                <li><a href="https://www.patreon.com/rolltoseduce" target="_blank" rel="noopener noreferrer" className="text-[#A8A8B3] hover:text-[#FF6B9D] transition-colors">Patreon</a></li>
                 <li><a href="#" className="text-[#A8A8B3] hover:text-[#FF6B9D] transition-colors">SubscribeStar</a></li>
                 <li><a href="#" className="text-[#A8A8B3] hover:text-[#FF6B9D] transition-colors">Buy Me a Coffee</a></li>
                 <li><a href="#" className="text-[#A8A8B3] hover:text-[#FF6B9D] transition-colors">Merch Store</a></li>
@@ -1158,7 +872,7 @@ const RollToSeduceWebsite = () => {
             <div>
               <h4 className="text-[#E5E5E7] mb-4 tracking-wider text-sm">INFO</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-[#A8A8B3] hover:text-[#E5E5E7] transition-colors">Press Kit</a></li>
+                <li><a href="#" className="text-[#A8A8B3] hover:text-[#E5E5E7] transition-colors">Installation Guide</a></li>
                 <li><a href="#" className="text-[#A8A8B3] hover:text-[#E5E5E7] transition-colors">Contact</a></li>
                 <li><a href="#" className="text-[#A8A8B3] hover:text-[#E5E5E7] transition-colors">Privacy</a></li>
                 <li><a href="#" className="text-[#A8A8B3] hover:text-[#E5E5E7] transition-colors">Terms</a></li>
@@ -1181,6 +895,15 @@ const RollToSeduceWebsite = () => {
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
+        }
+
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        .animate-spin {
+          animation: spin 1s linear infinite;
         }
 
         .font-serif {
