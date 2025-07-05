@@ -76,8 +76,8 @@ const RollToSeduceWebsite = () => {
   // Character data matching the dark fantasy theme
   const characters = [
     {
-      id: 'alina',
-      name: 'Alina',
+      id: 'alisha',
+      name: 'Alisha',
       title: 'Succubus Queen',
       description: 'Placeholder text',
       quote: 'Placeholder text',
@@ -919,7 +919,7 @@ const RollToSeduceWebsite = () => {
                 <span className="px-3 py-1 bg-[#9B59B6]/20 text-[#9B59B6] text-xs tracking-wider">DEV BLOG</span>
                 <span className="text-xs text-[#A8A8B3]">1 week ago</span>
               </div>
-              <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Behind the Scenes: Alina</h3>
+              <h3 className="text-2xl font-light mb-3 text-[#FAFAFA]">Behind the Scenes: Alisha</h3>
               <p className="text-[#E5E5E7] mb-4">
                 Coming soon.
               </p>
@@ -1037,7 +1037,7 @@ const RollToSeduceWebsite = () => {
                   <p className="text-sm text-[#A8A8B3] tracking-wider">MONTHLY SUPPORT</p>
                 </div>
                 <div>
-                  <div className="text-4xl font-light text-[#FF4757] mb-2">20%</div>
+                  <div className="text-4xl font-light text-[#FF4757] mb-2">86%</div>
                   <p className="text-sm text-[#A8A8B3] tracking-wider">TO NEXT GOAL</p>
                 </div>
               </div>
@@ -1414,7 +1414,7 @@ const RollToSeduceWebsite = () => {
                 <div className="text-center">
                   <div className="text-3xl font-light text-[#FF4757] mb-2">2</div>
                   <p className="text-[#E5E5E7]">2 Routes</p>
-                  <p className="text-xs text-[#A8A8B3] mt-1">Alina & Luciana</p>
+                  <p className="text-xs text-[#A8A8B3] mt-1">Alisha & Luciana</p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-light text-[#9B59B6] mb-2">15+</div>
